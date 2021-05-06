@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html style="overflow:hidden;background-image: url('./Images/UI/Background/BlackPattern.png');background-size: 194px auto;">
+   <head>
+      <link rel="stylesheet" href="./Script/style.css">
+      <style>
+         @font-face {font-family: tour;src: url('./Font/nintendoP_NTLG-NR-DB_003.ttf');}
+         @font-face {font-family: 'headername';src: url('./Font/nintendoP_NTLG-NR-UB_003.otf') format('opentype');font-display: swap;font-style: normal;font-weight: bold;}
+         @font-face {font-family: 'headername2';src: url('./Font/nintendop_ntlg-nr-db_003.otf') format('opentype');font-display: swap;font-style: normal;font-weight: bold;}
+      </style>
+      <link rel="preload" href="./Images/UI/Loading.png" as="image"> 
+
+      <link rel="preload" href="./Images/Pipe/Background/animated.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/Background/PipeBG1.png" as="image">
+      <link rel="preload" href="./Images/Pipe/Background/PipeBG2.png" as="image">
+      <link rel="preload" href="./Images/Pipe/Background/PipeBG3.png" as="image">
+      <link rel="preload" href="./Images/Pipe/Background/PipeFireBG.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/Background/PipeUltraFireBG.png" as="image"> 
+
+      <link rel="preload" href="./Images/Pipe/GotIt/infBack.gif" as="image"> 
+      <link rel="preload" href="./Images/Pipe/GotIt/Normal.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/GotIt/Super.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/GotIt/HighEndGradient.gif" as="image"> 
+      <link rel="preload" href="./Images/Pipe/GotIt/Highlight.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/GotIt/LayerOne.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/GotIt/GotIt.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/GotIt/GetItemEffect00.png" as="image"> 
+
+      <link rel="preload" href="./Images/Pipe/Animation/GreenSingle.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/Animation/GreenSingleStar.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/Animation/GoldSingle.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/Animation/GoldSingleStar.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/Animation/PullPipeGreenMultiImage.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/Animation/PullPipeGoldMultiImage.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/Animation/PullPipeGreenMultiImageStar.png" as="image"> 
+      <link rel="preload" href="./Images/Pipe/Animation/PullPipeGoldMultiImageStar.png" as="image"> 
+
+      <div> 
+   </head>
+   <body style="height: 1080px;" id="bigbody">
+      <img id="loadingimg" src="./Images/UI/Loading.png" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);z-index: 1000;">
+      <div id="inventorymodal" class="inventorymodal">
+      <div id="singleinv" class="inventorymodal-content stripedbg">
+      </div>
+
+      </div>
+      <div style="width:100%;padding:10px;margin-top: -12px;margin-left: -12px;position: sticky;top: 0;z-index:9999">
+      <div style="margin: 0px auto;right: 0;left: 0;">
+      <div id="content" style="margin: 0px auto;width: auto;max-width: 466px;height:auto;/*min-height: calc(100vh - 100px);*/border: 5px solid #b5ceff;background-image: url('./Images/Pipe/Banner/ShopBG00.png');background-size: 456px;">
+         <div id="pipePulling" class="noSelect">
+            <div id="pickingStage" style="text-align: center;width: 100%;height:820px;overflow-y:scroll;position: relative;">
+            </div>
+            <div id="settingsStage" style="text-align: center;width: 100%;height:820px;overflow-y:scroll;display:none;position: relative;background: rgba(0, 0, 0, 0.3);">
+              <img id="settingExitBtn" class="settingBtnPipe" src="./Images/UI/xbtn.png" onclick="toggleSettings(0)">
+              <h3 class="titleText" >Settings</h3>
+              <h3 style="font-family: tour; font-size:20px;margin-bottom: -6px;" class="whiteoutline">Pipes</h3>
+              <div>
+            <h4 style="display:inline-block;margin-bottom: 0px;">Show Previous Pipes</h4>
+            <input type="checkbox" id="changePreviousPipes"  oninput="changePreviousPipes()" style="vertical-align:middle;margin-top: -3px;width: 30px;height: 30px;">
+              </div>
+              <div>
+            <h4 style="display:inline-block;margin-bottom: 0px;">Show Custom Pipes</h4>
+            <input type="checkbox" id="changeCustomPipes"  oninput="changeCustomPipes()" style="vertical-align:middle;margin-top: 10px;width: 30px;height: 30px;">
+              </div>
+              <h3 style="font-family: tour; font-size:20px;" class="whiteoutline">Save Data</h3>
+              <div>
+                <button style="vertical-align:middle;margin-left: 10px;margin-top: -3px;width: auto;height: 30px;font-size:20px" onclick="resetRubiesCount()">Reset Spent Ruby Count</button>
+              </div>
+              <div>
+                <button style="vertical-align:middle;margin-left: 10px;margin-top: 10px;width: auto;height: 30px;font-size:20px" onclick="deleteLocalSaveData()">Delete Local Save Data</button>
+              </div>
+              <div style="margin-top: -6px;">
+            <h4 style="display:inline-block;margin-bottom: 0px;">Debug Save Data Viewer</h4>
+            <input type="checkbox" id="changedebugsave"  oninput="changedebugsave()" style="vertical-align:middle;margin-top: -3px;width: 30px;height: 30px;">
+              </div>
+              <div id="debugsave" style="display: none;">
+                <div>
+         <button onclick="updatesavedata()">Refresh</button>
+       </div>
+       <div>
+         <textarea style="z-index: 9999;" id="json" rows="35" cols="41"></textarea>
+       </div>
+              </div>
+            </div>
+            <div id="detailsStage" class="stripedbg" style="text-align: center;width: 100%;height:820px;overflow-y:scroll;position: relative;display: none;overflow-x: hidden"> 
+      
+            </div>
+            <div id="pullingStage" style="display: none;background-color: rgba(0,0,0,0.6);">
+            <div class="wrapper" style="border: 5px solid #b5ceff;">
+            <div id="pipe" class="pipe" style="/*width: 608px;height: 1080px;*/margin:0 auto;position: relative;overflow:hidden;display: none;background:url('./Images/Pipe/Background/PipeBG3.png')">
+         </div>
+          </div>
+       </div>
+
+            </div>
+      </div>
+
+      <audio id="PipeGoMulti">
+      <source src="./Images/Pipe/Sound/MultiPulledThePipe.wav" type="audio/wav">
+      </audio>  
+      <audio id="PipeGoMultiStar">
+      <source src="./Images/Pipe/Sound/MultiPulledThePipeStar.wav" type="audio/wav">
+      </audio> 
+      <audio id="PipeGoSingle">
+      <source src="./Images/Pipe/Sound/SinglePulledThePipe.wav" type="audio/wav">
+      </audio>  
+      <audio id="PipeGoSingleStar">
+      <source src="./Images/Pipe/Sound/SinglePulledThePipeStar.wav" type="audio/wav">
+      </audio>  
+      <audio id="HoldPipe">
+      <source src="./Images/Pipe/Sound/HoldPipe.wav" type="audio/wav">
+      </audio>   
+      <audio id="PipeAmbience">
+      <source src="./Images/Pipe/Sound/PipeAmbience.wav" type="audio/wav">
+      </audio>  
+      <audio id="GetHighEnd">
+      <source src="./Images/Pipe/Sound/GetItemHighEnd.wav" type="audio/wav">
+      </audio>   
+      <audio id="GetSuper">
+      <source src="./Images/Pipe/Sound/GetItemRare.wav" type="audio/wav">
+      </audio>   
+      <audio id="GetNormal">
+      <source src="./Images/Pipe/Sound/GetItemNormal.wav" type="audio/wav">
+      </audio> 
+      <audio id="PipeFire">
+      <source src="./Images/Pipe/Sound/PipeFire.wav" type="audio/wav">
+      </audio>  
+      <audio id="PipeFireStar">
+      <source src="./Images/Pipe/Sound/PipeFireStar.wav" type="audio/wav">
+      </audio>   
+      <audio id="Select">
+      <source src="./Images/Pipe/Sound/Select.wav" type="audio/wav">
+      </audio>  
+
+      <div style="display: none;">
+<table id="QuantityTable">
+<thead>
+  <tr>
+    <th></th>
+    <th> <img src="./Images/UI/Icon/Driver.png" style="width: 50px;height:auto;transform: scale(0.7);"> </th>
+    <th> <img src="./Images/UI/Icon/Kart.png" style="width: 50px;height:auto;transform: scale(0.7);"> </th>
+    <th> <img src="./Images/UI/Icon/Glider.png" style="width: 50px;height:auto;transform: scale(0.7);"> </th>
+  </tr>
+</thead>
+<tbody>
+  <tr id="row_012">
+    <th scope="row">High-End Spotlight</th>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+  </tr>
+  <tr id="row_345">
+    <th scope="row">High-End</th>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+  </tr>
+  <tr id="row_678">
+    <th scope="row">Super Spotlight</th>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+  </tr>
+  <tr id="row_91011">
+    <th scope="row">Super</th>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+  </tr>
+  <tr id="row_121314">
+    <th scope="row">Normal Spotlight</th>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+  </tr>
+  <tr  id="row_151617">
+    <th scope="row">Normal</th>
+    <td>15</td>
+    <td>16</td>
+    <td>17</td>
+  </tr>
+    <tr id="row_18">
+    <th scope="row">Custom</th>
+    <td>18</td>
+    <td>18</td>
+    <td>18</td>
+  </tr>
+</tbody>
+</table>
+<table id="HighEndTable" style="width: 400px;">
+<tbody>
+  <tr id="he_driver">
+    <th id="rowSpawnHEDriver" rowspan="1" style="width: 90px;"><img src="./Images/UI/Icon/Driver.png" style="width: 50px;height:auto;transform: scale(0.7);"> </th>
+    <td>Name</td>
+    <td>Chance</td>
+  </tr>
+  <tr id="he_kart">
+    <th id="rowSpawnHEKart" rowspan="1" style="width: 90px;"><img src="./Images/UI/Icon/Kart.png" style="width: 50px;height:auto;transform: scale(0.7);"> </th>
+    <td>Name</td>
+    <td>Chance</td>
+  </tr>
+  <tr id="he_glider">
+    <th id="rowSpawnHEGlider" rowspan="1" style="width: 90px;"><img src="./Images/UI/Icon/Glider.png" style="width: 50px;height:auto;transform: scale(0.7);"> </th>
+    <td>Name</td>
+    <td>Chance</td>
+  </tr>
+</tbody>
+</table>
+      </div>
+
+      <script type="text/javascript" src="./Script/global.js"></script>
+      <script type="text/javascript" src="./Script/pipe.js"></script>
+      <script type = "text/javascript" 
+         src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+      </script>
+      <script type = "text/javascript" 
+         src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js">
+      </script>
+      <script>
+         function readTextFile(file, unit)
+         {
+             var rawFile = new XMLHttpRequest();
+             rawFile.open("GET", file, false);
+             rawFile.onreadystatechange = function ()
+             {
+                 if(rawFile.readyState === 4)
+                 {
+                     if(rawFile.status === 200 || rawFile.status == 0)
+                     {
+                         var allText = rawFile.responseText;
+                         switch(unit){
+                          case 1:
+                          values = JSON.parse(allText);
+                          break;
+                          case 2:
+                          coursenames = JSON.parse(allText);
+                          break;
+                           case 3:
+                           courseimages = JSON.parse(allText);
+                           break;
+                           case 4:
+                           pipeData = JSON.parse(allText);
+                           break;
+                           case 5:
+                           itemData = JSON.parse(allText);
+                           break;
+                         }
+                     }
+                 }
+             }
+             rawFile.send(null);
+         }
+         readTextFile("https://halfhydra.github.io/MarioKartTourValues/Pipe/currentValues.json", 1);
+         generateArrays();
+         readTextFile("https://halfhydra.github.io/MarioKartTourValues/Pipe/pipeData.json", 4);
+         readTextFile("https://halfhydra.github.io/MarioKartTourValues/Pipe/itemData.json", 5);
+         if(localStorage.getItem("MKTPSaveData") != null){
+          savedata = JSON.parse(localStorage.getItem("MKTPSaveData"));
+          document.getElementById('json').innerHTML = JSON.stringify(savedata, null, 2);
+         }
+
+        if(localStorage.getItem("MKTPSettingData") != null){
+          settingsavedata = JSON.parse(localStorage.getItem("MKTPSettingData"));
+        }
+
+      window.onbeforeunload = function(){
+         document.getElementById('loadingimg').style.display = "block";
+      }
+      window.addEventListener('DOMContentLoaded', (event) => {
+      generatePipes();
+      //applyLocalSettings();
+      });
+      window.onload = function() {
+         document.getElementById('loadingimg').style.display = "none";
+      }
+
+$(document).on('click', '.ckgpanel', function () {
+    var element = this;
+    if(!element.classList.contains("hover13")){
+    element.classList.add("hover13");
+    }
+    setTimeout(function() {
+    if(element.classList.contains("hover13")){
+    element.classList.remove("hover13");
+    }
+    }, 1000);
+});
+$(document).on('click', '.cupbtn', function () {
+    var element = this;
+    if(!element.classList.contains("hover13")){
+    element.classList.add("hover13");
+    }
+    setTimeout(function() {
+    if(element.classList.contains("hover13")){
+    element.classList.remove("hover13");
+    }
+    }, 1000);
+});
+
+      </script>
+   </body>
+</html>
