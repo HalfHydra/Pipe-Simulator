@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html style="overflow:hidden;background-image: url('./Images/UI/Background/BlackPattern.png');background-size: 194px auto;">
    <head>
+
+      <!--<meta http-equiv="Content-Security-Policy" content="script-src 'self' https://halfhydra.github.io/">-->
+
       <link rel="stylesheet" href="./Script/style.css">
       <style>
          @font-face {font-family: tour;src: url('./Font/nintendoP_NTLG-NR-DB_003.ttf');}
@@ -52,7 +55,16 @@
             <div id="settingsStage" style="text-align: center;width: 100%;height:820px;overflow-y:scroll;display:none;position: relative;background: rgba(0, 0, 0, 0.3);">
               <img id="settingExitBtn" class="settingBtnPipe" src="./Images/UI/xbtn.png" onclick="toggleSettings(0)">
               <h3 class="titleText" >Settings</h3>
+              <h3 style="font-family: tour; font-size:20px;margin-bottom: -6px;" class="whiteoutline">General</h3>
+              <div>
+            <h4 style="display:inline-block;margin-bottom: 0px;">Disable Shop BGM</h4>
+            <input type="checkbox" id="changeDisableShopBGM"  oninput="changeDisableShopBGM()" style="vertical-align:middle;margin-top: -3px;width: 30px;height: 30px;">
+              </div>
               <h3 style="font-family: tour; font-size:20px;margin-bottom: -6px;" class="whiteoutline">Pipes</h3>
+              <div>
+            <h4 style="display:inline-block;margin-bottom: 0px;">Show Official Pipes</h4>
+            <input type="checkbox" checked id="changeOfficialPipes"  oninput="changeOfficialPipes()" style="vertical-align:middle;margin-top: -3px;width: 30px;height: 30px;">
+              </div>
               <div>
             <h4 style="display:inline-block;margin-bottom: 0px;">Show Previous Pipes</h4>
             <input type="checkbox" id="changePreviousPipes"  oninput="changePreviousPipes()" style="vertical-align:middle;margin-top: -3px;width: 30px;height: 30px;">
@@ -60,6 +72,15 @@
               <div>
             <h4 style="display:inline-block;margin-bottom: 0px;">Show Custom Pipes</h4>
             <input type="checkbox" id="changeCustomPipes"  oninput="changeCustomPipes()" style="vertical-align:middle;margin-top: 10px;width: 30px;height: 30px;">
+              </div>
+              <h3 style="font-family: tour; font-size:20px;" class="whiteoutline">Pulling</h3>
+              <div>
+            <h4 style="display:inline-block;margin-bottom: 0px;">Disable Single Pull Results</h4>
+            <input type="checkbox" id="changeSingleResults"  oninput="changeSingleResults()" style="vertical-align:middle;margin-top: -3px;width: 30px;height: 30px;">
+              </div>
+              <div>
+            <h4 style="display:inline-block;margin-bottom: 0px;">Disable Unskippable Star Animation</h4>
+            <input type="checkbox" id="changeSkipStar"  oninput="changeSkipStar()" style="vertical-align:middle;margin-top: -3px;width: 30px;height: 30px;">
               </div>
               <h3 style="font-family: tour; font-size:20px;" class="whiteoutline">Save Data</h3>
               <div>
@@ -106,10 +127,10 @@
       <audio id="PipeGoSingleStar">
       <source src="./Images/Pipe/Sound/SinglePulledThePipeStar.wav" type="audio/wav">
       </audio>  
-      <audio id="HoldPipe">
+      <audio id="HoldPipe" ontimeupdate="loopHold()">
       <source src="./Images/Pipe/Sound/HoldPipe.wav" type="audio/wav">
       </audio>   
-      <audio id="PipeAmbience">
+      <audio id="PipeAmbience" ontimeupdate="loopAudience()">
       <source src="./Images/Pipe/Sound/PipeAmbience.wav" type="audio/wav">
       </audio>  
       <audio id="GetHighEnd">
@@ -126,10 +147,16 @@
       </audio>  
       <audio id="PipeFireStar">
       <source src="./Images/Pipe/Sound/PipeFireStar.wav" type="audio/wav">
+      </audio>  
+      <audio id="Shop" ontimeupdate="loopShop()">
+      <source src="./Images/Pipe/Sound/Shop.wav" type="audio/wav">
       </audio>   
       <audio id="Select">
       <source src="./Images/Pipe/Sound/Select.wav" type="audio/wav">
       </audio>  
+      <audio id="Swipe">
+      <source src="./Images/Pipe/Sound/Swipe.wav" type="audio/wav">
+      </audio>
 
       <div style="display: none;">
 <table id="QuantityTable">
@@ -266,8 +293,8 @@
          document.getElementById('loadingimg').style.display = "block";
       }
       window.addEventListener('DOMContentLoaded', (event) => {
+      applyLocalSettings();
       generatePipes();
-      //applyLocalSettings();
       });
       window.onload = function() {
          document.getElementById('loadingimg').style.display = "none";

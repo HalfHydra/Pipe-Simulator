@@ -38,22 +38,12 @@ let savedata = {
 }
 let settingsavedata = {
     Settings: {
-        currentCup: 0,
-        currentmode: 0,
-        missingmode: 0,
-        coursesmode: 0,
-        topshelfmode: 0,
-        currentspecificitem: 0,
-        currentitemtype: 0,
-        currentitemrarity: 0,
-        currentitemitem: 0,
-        isDataEntered: false,
-        disableCityValue: false,
-        isMultipleShelves: false,
-        onlyOwnedItems: false,
-        onlyOwnedItemsInv: false,
-        missingIncludesCityCourses: true,
-        selectedcourses: []
+        disableShopBGM: false,
+        showOfficialPipes: true,
+        showPreviousPipes: false,
+        showCustomPipes: false,
+        disableSingleResults: false,
+        skipStarAnimation: false
     }
 }
 var characterid = [];
@@ -71,6 +61,10 @@ var inventorymodal = document.getElementById('inventorymodal');
 let driverTable = [];
 let machineTable = [];
 let wingTable = [];
+
+let disableShopBGM = false;
+let disableSingleResults = false;
+let skipStarAnimation = false;
 
 function generateArrays(){
 
@@ -143,13 +137,6 @@ function generateArrays(){
 
 }
 
-window.onclick = function(event) {
-  if (event.target == inventorymodal) {
-    inventorymodal.style.display = "none";
-    document.getElementById('singleinv').innerHTML = "";
-  }
-}
-
 function updatesavedata() {
     //generateCourseList();
     document.getElementById('json').innerHTML = JSON.stringify(savedata, null, 2);
@@ -178,117 +165,26 @@ function deleteLocalSaveData(){
 }
 
 function applyLocalSettings(){
-    changecoursemode(settingsavedata.Settings.coursesmode);
-    changecourseckg(settingsavedata.Settings.topshelfmode);
-    if(settingsavedata.Settings.currentspecificitem != 0){
-    specificchoicemade(settingsavedata.Settings.currentspecificitem,settingsavedata.Settings.currentitemtype,settingsavedata.Settings.currentitemrarity,settingsavedata.Settings.currentitemitem);
+    if(settingsavedata.Settings.disableShopBGM){
+        document.getElementById('changeDisableShopBGM').checked = true;
+        disableShopBGM = true;
+        //Shop.pause();
     }
-    changemode(settingsavedata.Settings.currentCup);
-    changeckg(settingsavedata.Settings.currentmode);
-    changemissingckg(settingsavedata.Settings.missingmode);
-    //disableData
-    /*if (settingsavedata.Settings.isDataEntered) {
-        isDataEntered = true;
-    } else {
-        isDataEntered = false;
-        if(localStorage.getItem("MKTVSaveData") != null){
-            document.getElementById('changeusedata').checked = true;
-        }
-    }*/
-    //disableCityValue
-    if (settingsavedata.Settings.disableCityValue) {
-        disableCityValue = true;
-        document.getElementById('changecityvalue').checked = true;
-    } else {
-        disableCityValue = false;
+    if(settingsavedata.Settings.disableSingleResults){
+        document.getElementById('changeSingleResults').checked = true;
+        disableSingleResults = true;
     }
-    //isMultipleShelves
-    if (settingsavedata.Settings.isMultipleShelves) {
-        isMultipleShelves = true;
-        document.getElementById('changemultiplepanelvalue').checked = true;
-    } else {
-        isMultipleShelves = false;
+    if(settingsavedata.Settings.skipStarAnimation){
+        document.getElementById('changeSkipStar').checked = true;
+        skipStarAnimation = true;
     }
-    //onlyOwnedItems
-    if (settingsavedata.Settings.onlyOwnedItems) {
-        onlyOwnedItems = true;
-        document.getElementById('changeowneditems').checked = true;
-    } else {
-        onlyOwnedItems = false;
+    if(!settingsavedata.Settings.showOfficialPipes){
+        document.getElementById('changeOfficialPipes').checked = true;
     }
-    //onlyOwnedItemsInv
-    if (settingsavedata.Settings.onlyOwnedItemsInv) {
-        onlyOwnedItemsInv = true;
-        document.getElementById('changeowneditemsinv').checked = true;
-    } else {
-        onlyOwnedItemsInv = false;
+    if(settingsavedata.Settings.showPreviousPipes){
+        document.getElementById('changePreviousPipes').checked = true;
     }
-    //missingIncludesCityCourses
-    if (settingsavedata.Settings.missingIncludesCityCourses) {
-        missingIncludesCityCourses = true;
-    } else {
-        missingIncludesCityCourses = false;
-        document.getElementById('changecitymissing').checked = true;
-    }
-    //useInvCol
-    if (settingsavedata.Settings.useInvCol) {
-        useInvCol = true;
-        document.getElementById('changeuseinvcol').checked = true;
-    } else {
-        useInvCol = false;
-    }
-    changeinventorycol();
-    //final
-    selectedcourses = settingsavedata.Settings.selectedcourses;
-    selectedCourses();
-    missingCourses();
-}
-
-function downloadcoursejson(mode){
-    generateCourseList();
-    courseListMade = true;
-    var data = "";
-    switch(mode){
-    case 0:
-    data = JSON.stringify(coursedata, null, 2);
-    break;
-    case 1:
-    data = JSON.stringify(coursedataeng, null, 2);
-    break;
-    case 2:
-    data = JSON.stringify(values, null, 2);
-    break;
-    }
-    var filename = "";
-    switch(mode){
-        case 0:
-        filename = "MKTCoursesIDs" + currentTourFileName + ".json";
-        break;
-        case 1:
-        filename = "MKTCoursesNames" + currentTourFileName + ".json";
-        break;
-        case 2:
-        filename = "MKTValuesList" + currentTourFileName + ".json";
-        break;
-    }
-    var type = "text";
-    var a = document.createElement("a")
-      , file = new Blob([data],{
-        type: type
-    });
-    if (window.navigator.msSaveOrOpenBlob)
-        // IE10+
-        window.navigator.msSaveOrOpenBlob(file, filename);
-    else {
-        // Others
-        var url = URL.createObjectURL(file);
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(function() {
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-        }, 0);
+    if(settingsavedata.Settings.showCustomPipes){
+        document.getElementById('changeCustomPipes').checked = true;
     }
 }

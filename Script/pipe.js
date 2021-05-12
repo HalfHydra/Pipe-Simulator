@@ -4,6 +4,8 @@ var pipeData = {};
 
 let finalToggle = false;
 
+//let currentPipeId;
+
 function generatePipes(){
     document.getElementById('pickingStage').innerHTML = "";
 
@@ -15,6 +17,9 @@ function generatePipes(){
 
     let officialbannerdiv = document.createElement('div');
         officialbannerdiv.id = `officialBannerDiv`;
+        if(!document.getElementById('changeOfficialPipes').checked){
+        officialbannerdiv.style.display = `none`;
+        }
         //officialbannerdiv.className = `pipebanner-content`;
     document.getElementById('pickingStage').appendChild(officialbannerdiv);
 
@@ -161,14 +166,19 @@ function generatePipes(){
 
         document.getElementById('pickingStage').appendChild(rubiesCount);
         updateRubiesCount();
+        if(!disableShopBGM){
+        Shop.play();
+        }
 
 }
 
 function generateDetails(pipeId){
-    readTextFile("https://halfhydra.github.io/MarioKartTourValues/Pipe/pipeData.json", 4);
+    Swipe.play();
     document.getElementById("pickingStage").style.display = "none";
     document.getElementById("detailsStage").style.display = "block";
     document.getElementById("detailsStage").innerHTML = "";
+
+    readTextFile("https://halfhydra.github.io/MarioKartTourValues/Pipe/pipeData.json", 4);
 
     var titletxt = document.createElement('p');
         titletxt.id = `titletxt`
@@ -196,14 +206,12 @@ function generateDetails(pipeId){
     let tableClone = document.getElementById('QuantityTable').cloneNode(true);
     tableClone.id = `QuantityTable_${pipeId}`;
 
-    //let savePipe = savedata.Pipes[pipeId];
+    console.log(pipeData);
 
-    console.log(pipeData)
-
-    let savePipe = savedata.Pipes[pipeId];
-    let saveItemAmounts = savedata.Pipes[pipeId].Items;
-    let fullPipe = pipeData.Pipes[pipeId];
-    let fullItemAmounts = pipeData.Pipes[pipeId].Items;
+    const savePipe = savedata.Pipes[pipeId];
+    const saveItemAmounts = savedata.Pipes[pipeId].Items;
+    const fullPipe = pipeData.Pipes[pipeId];
+    const fullItemAmounts = pipeData.Pipes[pipeId].Items;
 
     let includedTypes = [];
 
@@ -1120,6 +1128,7 @@ function generateDetails(pipeId){
 
 
 function toggleSettings(toggle){
+    Swipe.play();
     switch(toggle){
         case 0:
         document.getElementById('pickingStage').style.display = 'block';
@@ -1133,24 +1142,78 @@ function toggleSettings(toggle){
 }
 
 function returnToMain(){
+    Swipe.play();
     document.getElementById('pickingStage').style.display = 'block';
     document.getElementById('detailsStage').style.display = 'none';
+}
+
+function changeDisableShopBGM(){
+    if(document.getElementById('changeDisableShopBGM').checked){
+        disableShopBGM = true;
+        settingsavedata.Settings.disableShopBGM = true;
+        Shop.pause();
+    } else {
+        disableShopBGM = false;
+        settingsavedata.Settings.disableShopBGM = false;
+        Shop.play();
+    }
+    updateLocalSettingData();
+}
+
+function changeSingleResults(){
+    if(document.getElementById('changeSingleResults').checked){
+        disableSingleResults = true;
+        settingsavedata.Settings.disableSingleResults = true;
+    } else {
+        disableSingleResults = false;
+        settingsavedata.Settings.disableSingleResults = false;
+    }
+    updateLocalSettingData();
+}
+
+function changeSkipStar(){
+    if(document.getElementById('changeSkipStar').checked){
+        skipStarAnimation = true;
+        settingsavedata.Settings.skipStarAnimation = true;
+    } else {
+        skipStarAnimation = false;
+        settingsavedata.Settings.skipStarAnimation = false;
+    }
+    updateLocalSettingData();
+}
+
+
+function changeOfficialPipes(){
+    if(document.getElementById('changeOfficialPipes').checked){
+        document.getElementById('officialBannerDiv').style.display = "block";
+        settingsavedata.Settings.showOfficialPipes = true;
+    } else {
+        document.getElementById('officialBannerDiv').style.display = "none";
+        settingsavedata.Settings.showOfficialPipes = false;
+    }
+    updateLocalSettingData();
 }
 
 function changePreviousPipes(){
     if(document.getElementById('changePreviousPipes').checked){
         document.getElementById('previousBannerDiv').style.display = "block";
+        settingsavedata.Settings.showPreviousPipes = true;
     } else {
         document.getElementById('previousBannerDiv').style.display = "none";
+        settingsavedata.Settings.showPreviousPipes = false;
     }
+    updateLocalSettingData();
 }
 
 function changeCustomPipes(){
     if(document.getElementById('changeCustomPipes').checked){
         document.getElementById('customBannerDiv').style.display = "block";
+        settingsavedata.Settings.showCustomPipes = true;
     } else {
         document.getElementById('customBannerDiv').style.display = "none";
+        settingsavedata.Settings.showCustomPipes = false;
     }
+    updateLocalSettingData();
 }
 
 function updateRubiesCount(){
@@ -1186,6 +1249,7 @@ function validatePull(pipeId, times){
 }
 
 function generatePull(pipeId, pullTimes){
+readTextFile("https://halfhydra.github.io/MarioKartTourValues/Pipe/pipeData.json", 4);
 if(savedata.Pipes == null){
     savedata.Pipes = {};
 }
@@ -1198,6 +1262,8 @@ if(savedata.Pipes[pipeId] == null){
 
 resultsPipeIds = [];
 currentMultiPipeIds.splice(0, currentMultiPipeIds.length);
+
+currentPipeId = pipeId;
 
 //0 = S HE D
 //1 = S HE K
@@ -1433,8 +1499,8 @@ for(let i = 0; i<pullTimes;i++){
             savedata.Pipes[pipeId].Spotlights.splice(savedata.Pipes[pipeId].Spotlights.indexOf(parseInt(spotlightItem)), 1);
         break;
     }
+    updatesavedata();
     updateLocalSaveData();
-    updatesavedata()
 
 }
 
@@ -1444,12 +1510,15 @@ createPullyPipe();
 }
 
 function resetPipe(id){
+    Swipe.play();
     var r = confirm("This will reset the contents of the pipe, returning it to full. Reset the pipe?");
     if (r) {
     delete savedata.Pipes[id];
     updatesavedata();
     updateLocalSaveData();
+    readTextFile("https://halfhydra.github.io/MarioKartTourValues/Pipe/pipeData.json", 4);
     generatePipes();
+    Select.play();
     }
 }
 
@@ -1509,6 +1578,8 @@ document.getElementById('toad_RedBack').className = "toad_RedBackFast";
     document.getElementById('toad_BlueBackBottom').className = "toad_BlueBackFastBottom";
     document.getElementById('toad_BlueBackBottom').src = "./Images/Pipe/Toad/KinopioFrontB01.png";
     document.getElementById('pullypipeglow').style.display = "block";
+    document.getElementById('pullypipeglowoverlay').style.display = "block";
+    document.getElementById('pullypipeglowoverlayfinal').style.display = "block";
 if(pipeTypeIndex == 0){
         document.getElementById('pullypipe').src = "./Images/Pipe/Pipe/Pipe01.png";
         document.getElementById('pipeSceneBottom').src = "./Images/Pipe/PipeBottom/Pipe01.png";
@@ -1528,6 +1599,12 @@ if(pipeTypeIndex == 0){
     if(pipeDrag < 150){ pipeDrag = 150 }
     document.getElementById("pullypipe").style.height = `${pipeDrag}px`;
     document.getElementById("pullypipeglow").style.bottom = `${pipeDrag-157}px`;
+    document.getElementById("pullypipeglow").style.opacity = (pipeDrag != 205 ? ((300-pipeDrag)/150) : 0);
+    document.getElementById("pullypipeglowoverlay").style.bottom = `${pipeDrag-157}px`;
+    document.getElementById("pullypipeglowoverlay").style.opacity = (pipeDrag != 205 ? ((300-pipeDrag)/150) : 0);
+    document.getElementById("pullypipeglowoverlayfinal").style.bottom = `${pipeDrag-157}px`;
+    document.getElementById("pullypipeglowoverlayfinal").style.opacity = (pipeDrag != 205 ? ((300-pipeDrag)/150) : 0);
+    if(document.getElementById("pullypipeglowoverlayfinal").style.opacity > 0.5){document.getElementById("pullypipeglowoverlayfinal").style.opacity = 0}
   }
   mousePosY = e.clientY;
 }
@@ -1552,6 +1629,8 @@ if(!pulling){
     document.getElementById('toad_BlueBackBottom').className = "toad_BlueBackBottom";
     document.getElementById('toad_BlueBackBottom').src = "./Images/Pipe/Toad/KinopioFrontB00.png";
     document.getElementById('pullypipeglow').style.display = "none";
+    document.getElementById('pullypipeglowoverlay').style.display = "none";
+    document.getElementById('pullypipeglowoverlayfinal').style.display = "none";
     if(pipeTypeIndex == 0){
         document.getElementById('pullypipe').src = "./Images/Pipe/Pipe/Pipe00.png";
         document.getElementById('pipeSceneBottom').src = "./Images/Pipe/PipeBottom/Pipe00.png";
@@ -1583,7 +1662,10 @@ var PipeGoSingleStar = document.getElementById("PipeGoSingleStar");
 var PipeGoMulti = document.getElementById("PipeGoMulti");
 var PipeGoMultiStar = document.getElementById("PipeGoMultiStar");
 
+var Shop = document.getElementById("Shop");
+
 var Select = document.getElementById("Select");
+var Swipe = document.getElementById("Swipe");
 //PIPE
 function mouseMoveFunction(e){
           //if(mouseDown){
@@ -1620,6 +1702,8 @@ function getPipeTypeIndex(){
     if((Math.random()*100) < 10){
         type = 0;
     }
+
+    if(currentPipeId == `ACP`){ type = 1 }
 
     (type == 0 ? document.getElementById('pipe').style.background = `url('./Images/Pipe/Background/PipeFireBG.png')` : document.getElementById('pipe').style.background = `url('./Images/Pipe/Background/PipeUltraFireBG.png')` )
 
@@ -1714,11 +1798,23 @@ function createPullyPipe(){
     blueBackBottom.src = "./Images/Pipe/Toad/KinopioFrontB00.png";
     output.appendChild(blueBackBottom);
 
+    let pullypipeglowoverlay = document.createElement('img');
+    pullypipeglowoverlay.id = "pullypipeglowoverlay";
+    pullypipeglowoverlay.className = "pullypipeglowoverlay";
+    pullypipeglowoverlay.src = "./Images/Pipe/Overlay.png";
+    output.appendChild(pullypipeglowoverlay);
+
     let pullypipeglow = document.createElement('img');
     pullypipeglow.id = "pullypipeglow";
     pullypipeglow.className = "pullypipeglow";
     pullypipeglow.src = "./Images/Pipe/Glow.png";
     output.appendChild(pullypipeglow);
+
+    let pullypipeglowoverlayfinal = document.createElement('img');
+    pullypipeglowoverlayfinal.id = "pullypipeglowoverlayfinal";
+    pullypipeglowoverlayfinal.className = "pullypipeglowoverlayfinal";
+    pullypipeglowoverlayfinal.src = "./Images/Pipe/Overlay.png";
+    output.appendChild(pullypipeglowoverlayfinal);
 
     //output.appendChild(pipediv);
 
@@ -1731,7 +1827,8 @@ function createPullyPipe(){
     document.getElementById('pickingStage').style.display = "none";
     document.getElementById('pullingStage').style.display = "block";
     document.getElementById('pullingStage').className = "fadeInPipe";
-
+    Shop.pause();
+    //Shop.currentTime = 0;
     PipeAmbience.play();
 }
 
@@ -1792,6 +1889,12 @@ PullImage.src = "./Images/Pipe/Animation/Pull.gif";
 var PullImageStar = new Image();
 PullImageStar.src = "./Images/Pipe/Animation/PullStar.gif";
 
+var PullVideo = document.createElement('video');
+PullVideo.src = `./Images/Pipe/Video/Pull.mp4`;
+
+var PullVideoStar = document.createElement('video');
+PullVideoStar.src = `./Images/Pipe/Video/PullStar.mp4`;
+
 var infBack = new Image();
 infBack.src = "./Images/Pipe/GotIt/infBack.gif";
 
@@ -1808,9 +1911,17 @@ function Pulling(){
     document.getElementById('pipe').innerHTML = "";
 
     let goldOffset = 0;
+
+    let videoAnim = document.createElement('video');
+    videoAnim.style.width = "608px";
+    videoAnim.style.height = "1080px";
+    videoAnim.style.zIndex = `100`;
+    videoAnim.autoplay = true;
+    videoAnim.preload = "auto";
+
     var animation = document.createElement('img');
-    animation.src = PullPipeGoldImage.src;
-    animation.className = "noSelect";
+    /*animation.src = PullPipeGoldImage.src;
+    animation.className = "noSelect";*/
     let time = new Date().getTime();
 
    let rarity = values[currentPipeId].rarityId;
@@ -1831,22 +1942,26 @@ function Pulling(){
     if(rarity < 2 || rarity == 2 && itemType != 0){
         switch(pipeTypeIndex){
     case 0:
-    animation.src = `./Images/Pipe/Animation/PullPipeGreenMultiImage.png?${time}`;
+    //animation.src = `./Images/Pipe/Animation/PullPipeGreenMultiImage.png?${time}`;
+    videoAnim.src = `./Images/Pipe/Video/GreenMulti.mp4?${time}`;
     PipeGoMulti.play();
     break;
     case 1:
-    animation.src = `./Images/Pipe/Animation/PullPipeGoldMultiImage.png?${time}`;
+    //animation.src = `./Images/Pipe/Animation/PullPipeGoldMultiImage.png?${time}`;
+    videoAnim.src = `./Images/Pipe/Video/GoldMulti.mp4?${time}`;
     PipeGoMulti.play();
     break;
     }
     } else {
          switch(pipeTypeIndex){
     case 0:
-    animation.src = `./Images/Pipe/Animation/PullPipeGreenMultiImageStar.png?${time}`;
+    //animation.src = `./Images/Pipe/Animation/PullPipeGreenMultiImageStar.png?${time}`;
+    videoAnim.src = `./Images/Pipe/Video/GreenMultiStar.mp4?${time}`;
     PipeGoMultiStar.play();
     break;
     case 1:
-    animation.src = `./Images/Pipe/Animation/PullPipeGoldMultiImageStar.png?${time}`;
+    //animation.src = `./Images/Pipe/Animation/PullPipeGoldMultiImageStar.png?${time}`;
+    videoAnim.src = `./Images/Pipe/Video/GoldMultiStar.mp4?${time}`;
     PipeGoMultiStar.play();
     break;
     }
@@ -1857,15 +1972,18 @@ function Pulling(){
     if(rarity < 2 || rarity == 2 && itemType != 0){
         switch(pipeTypeIndex){
     case 0:
-    animation.src = `./Images/Pipe/Animation/GreenSingle.png?${time}`;
-    animation.style.width = "608px";
-    animation.style.height = "1080px";
+    //animation.src = `./Images/Pipe/Animation/GreenSingle.png?${time}`;
+    videoAnim.src = `./Images/Pipe/Video/GreenSingle.mp4?${time}`;
+    //animation.style.width = "608px";
+    //animation.style.height = "1080px";
     PipeGoSingle.play();
     break;
     case 1:
-    animation.src = `./Images/Pipe/Animation/GoldSingle.png?${time}`;
-    animation.style.width = "608px";
-    animation.style.height = "1080px";
+    //animation.src = `./Images/Pipe/Animation/GoldSingle.png?${time}`;
+    videoAnim.src = `./Images/Pipe/Video/GoldSingle.mp4?${time}`;
+    //animation.src = `./Images/Pipe/Video/GoldSingle.mp4?${time}`;
+    //animation.style.width = "608px";
+    //animation.style.height = "1080px";
     //animation.src = PullPipeGoldImage.src;
     console.log('bruh')
     PipeGoSingle.play();
@@ -1874,15 +1992,17 @@ function Pulling(){
     } else {
          switch(pipeTypeIndex){
     case 0:
-    animation.src = `./Images/Pipe/Animation/GreenSingleStar.png?${time}`;
-    animation.style.width = "608px";
-    animation.style.height = "1080px";
+    //animation.src = `./Images/Pipe/Animation/GreenSingleStar.png?${time}`;
+    videoAnim.src = `./Images/Pipe/Video/GreenSingleStar.mp4?${time}`;
+    //animation.style.width = "608px";
+    //animation.style.height = "1080px";
     PipeGoSingleStar.play();
     break;
     case 1:
-    animation.src = `./Images/Pipe/Animation/GoldSingleStar.png?${time}`;
-    animation.style.width = "608px";
-    animation.style.height = "1080px";
+    //animation.src = `./Images/Pipe/Animation/GoldSingleStar.png?${time}`;
+    videoAnim.src = `./Images/Pipe/Video/GoldSingleStar.mp4?${time}`;
+    //animation.style.width = "608px";
+    //animation.style.height = "1080px";
     PipeGoSingleStar.play();
     break;
     }
@@ -1897,18 +2017,28 @@ function Pulling(){
     //let div2 = document.createElement('div');
     //document.getElementById('pipe').appendChild(div1);
     //div2.appendChild(animation);
-    document.getElementById('pipe').appendChild(animation);
+    //document.getElementById('pipe').appendChild(animation);
+    document.getElementById('pipe').appendChild(videoAnim);
     //Result
     Skippable = false;
 
-if(rarity == 2 && itemType == 0){
-    goldOffset += 3500;
-} else if(currentMultiPipeIds.length < 3){
-    goldOffset -= 600;
-}
 
-if(rarity == 2 && itemType == 0 && currentMultiPipeIds.length > 3){
-    goldOffset += 200;
+if(currentMultiPipeIds.length > 3){ 
+    //Multi
+    if(rarity == 2 && itemType == 0){
+    //Star
+    goldOffset = 9150; //GOOD
+    } else {
+    goldOffset = 5180; //GOOD
+    }
+} else {
+    //Single
+    if(rarity == 2 && itemType == 0){
+    //Star
+    goldOffset = 7880; //GOOD
+    } else {
+    goldOffset = 3820; //GOOD
+    }
 }
 
 if(currentMultiPipeIds.length > 3){
@@ -1917,12 +2047,12 @@ if(currentMultiPipeIds.length > 3){
     let pipeWindow = document.getElementById('pipe');
     pipeWindow.style.backgroundImage = "url('./Images/Pipe/GotIt/infBack.gif')";
     pipeWindow.style.backgroundSize = "2000px";
-  }, 3500 + goldOffset);
+  }, goldOffset);
     
     setTimeout(function(){
     Skippable = true;
     Result();
-  }, 3500 + goldOffset);
+  }, goldOffset);
 } else {
     setTimeout(function(){
     //document.getElementById('pipe').style.backgroundImage = "linear-gradient(rgb(0, 1, 4,0.9), rgb(16, 31, 244,0.9)), url(./Images/Pipe/GotIt/infBack.gif)"
@@ -1930,12 +2060,12 @@ if(currentMultiPipeIds.length > 3){
     //document.getElementById('pipe').setAttribute('src', PullImage.src);
     pipeWindow.style.backgroundImage = "./Images/Pipe/GotIt/infBack.gif";
     pipeWindow.style.backgroundSize = "2000px";
-  }, 2500 + goldOffset);
+  }, goldOffset);
     
     setTimeout(function(){
     Skippable = true;
     Result();
-  }, 2500 + goldOffset);
+  }, goldOffset);
 }
 
 }
@@ -1946,7 +2076,19 @@ let currentTimeout;
 
 let Skippable = true;
 
+let videoAnim = document.createElement('video');
+    videoAnim.id = `videoAnim`;
+    videoAnim.style.width = "608px";
+    videoAnim.style.height = "1080px";
+    videoAnim.autoplay = true;
+    videoAnim.zIndex = 100;
+    //videoAnim.style.position = `absolute`;
+    //videoAnim.style.display = `inline-block`;
+    videoAnim.preload = "auto";
+
 function Result(){
+  document.getElementById('pipe').style.backgroundImage = "url(./Images/Pipe/Background/PullScreenshot.png)";
+  document.getElementById('pipe').style.backgroundSize = "608px 1080px";
 
   if(!Skippable){
         console.log("yay")
@@ -1975,16 +2117,20 @@ function Result(){
     PipeFireStar.pause();
 
   if(pullToggle == 0){
-    document.getElementById('pipe').innerHTML = "";
-
-    var animation = document.createElement('img');
+    /*var animation = document.createElement('img');
     animation.id = "animationPull";
     animation.className = "noSelect";
-    document.getElementById('pipe').appendChild(animation);
+    document.getElementById('pipe').appendChild(animation);*/
+    document.getElementById('pipe').innerHTML = "";
 
-    animation.offsetHeight; //redraw hack
+    let time = new Date().getTime();
+    //animation.offsetHeight; //redraw hack
     if(rarity < 2 || rarity == 2 && itemType != 0){
-    document.getElementById('animationPull').setAttribute('src', PullImage.src);
+    //document.getElementById('animationPull').setAttribute('src', PullImage.src);
+    //document.getElementById('videoAnim').setAttribute('src', PullVideo.src);
+    //videoAnim.src = `./Images/Pipe/Video/Pull.mp4?${time}`;
+    videoAnim.src = `./Images/Pipe/Video/Pull.mp4`;
+    document.getElementById('pipe').appendChild(videoAnim);
     Skippable = true;
     PipeFire.currentTime = 0;
     PipeFire.play();
@@ -1996,8 +2142,12 @@ function Result(){
       }, 2300);
 
     } else {
-    document.getElementById('animationPull').setAttribute('src', PullImageStar.src);
-    Skippable = false;
+    //document.getElementById('animationPull').setAttribute('src', PullImageStar.src);
+    //document.getElementById('videoAnim').setAttribute('src', PullVideoStar.src);
+    //videoAnim.src = `./Images/Pipe/Video/PullStar.mp4?${time}`;
+    videoAnim.src = `./Images/Pipe/Video/PullStar.mp4`;
+    document.getElementById('pipe').appendChild(videoAnim);
+    (skipStarAnimation == true ? Skippable = true : Skippable = false);
     PipeFireStar.currentTime = 0;
     PipeFireStar.play();
     currentTimeout = setTimeout(function(){
@@ -2014,6 +2164,7 @@ function Result(){
 //document.getElementById('pipe').style.backgroundImage = "linear-gradient(rgb(0, 1, 4,0.9), rgb(16, 31, 244,0.9)), url(./Images/Pipe/GotIt/infBack.gif)"
     
     document.getElementById('pipe').style.backgroundImage = "url(./Images/Pipe/GotIt/infBack.gif)"
+    document.getElementById('pipe').style.backgroundSize = "2000px";
     var gradient = document.createElement('img');
     gradient.id = "gradientPipe";
     gradient.src = "./Images/Pipe/GotIt/Gradient.png"
@@ -2054,11 +2205,13 @@ function Result(){
     document.getElementById('pipe').appendChild(highlight);
 
     var layerone = document.createElement('img');
+    layerone.id = "layeronepipe_1";
     layerone.className = "layeronepipe spinslow";
     layerone.src = "./Images/Pipe/GotIt/LayerOne.png"
     document.getElementById('pipe').appendChild(layerone);
 
     var layeronetwo = document.createElement('img');
+    layeronetwo.id = "layeronepipe_2";
     layeronetwo.className = "layeronepipe spinslowback";
     layeronetwo.src = "./Images/Pipe/GotIt/LayerOne.png"
     document.getElementById('pipe').appendChild(layeronetwo);
@@ -2081,6 +2234,7 @@ function Result(){
 
     var informationBox = document.createElement('div');
     informationBox.className = "messageBox";
+    informationBox.id = "messageBox";
     var messageBox = document.createElement('img');
     messageBox.id = "messageBoxBG";
     messageBox.className = "messageBoxBG";
@@ -2155,11 +2309,13 @@ function Result(){
     document.getElementById('pipe').appendChild(highlight);
 
     var layerone = document.createElement('img');
+    layerone.id = "layeronepipe_1";
     layerone.className = "layeronepipe spinslow";
     layerone.src = "./Images/Pipe/GotIt/LayerOne.png"
     document.getElementById('pipe').appendChild(layerone);
 
     var layeronetwo = document.createElement('img');
+    layeronetwo.id = "layeronepipe_2";
     layeronetwo.className = "layeronepipe spinslowback";
     layeronetwo.src = "./Images/Pipe/GotIt/LayerOne.png"
     document.getElementById('pipe').appendChild(layeronetwo);
@@ -2182,6 +2338,7 @@ function Result(){
 
     var informationBox = document.createElement('div');
     informationBox.className = "messageBox";
+    informationBox.id = "messageBox";
     var messageBox = document.createElement('img');
     messageBox.id = "messageBoxBG";
     messageBox.className = "messageBoxBG";
@@ -2270,11 +2427,13 @@ function Result(){
     document.getElementById('pipe').appendChild(highlight);
 
     var layerone = document.createElement('img');
+    layerone.id = "layeronepipe_1";
     layerone.className = "layeronepipe spinslow";
     layerone.src = "./Images/Pipe/GotIt/LayerOne.png"
     document.getElementById('pipe').appendChild(layerone);
 
     var layeronetwo = document.createElement('img');
+    layeronetwo.id = "layeronepipe_2";
     layeronetwo.className = "layeronepipe spinslowback";
     layeronetwo.src = "./Images/Pipe/GotIt/LayerOne.png"
     document.getElementById('pipe').appendChild(layeronetwo);
@@ -2297,6 +2456,7 @@ function Result(){
 
     var informationBox = document.createElement('div');
     informationBox.className = "messageBox";
+    informationBox.id = "messageBox";
     var messageBox = document.createElement('img');
     messageBox.id = "messageBoxBG";
     messageBox.className = "messageBoxBG";
@@ -2389,7 +2549,10 @@ function Result(){
 function deleteOld() {
   document.getElementById('gradientPipe').remove();
   document.getElementById('highlightPipe').remove();
+  document.getElementById('layeronepipe_1').remove();
+  document.getElementById('layeronepipe_2').remove();
   document.getElementById('itemPipe').remove();
+  document.getElementById('messageBox').remove();
   document.getElementById('gotIt').remove();
   document.getElementById('gotItEffect0').remove();
 }
@@ -2397,9 +2560,25 @@ function deleteOld() {
 function finalResults(){
     console.log("Final");
 
+    if(!disableShopBGM){
+    Shop.play();
+    }
+
     finalToggle = true;
 
-    document.getElementById('pipe').style.backgroundImage = "";
+    //document.getElementById('pipe').style.backgroundImage = "";
+
+    setTimeout(function(){
+        deleteOld();
+    }, 200);
+
+    setTimeout(function(){
+    if(disableSingleResults && resultsPipeIds.length == 2){ 
+        document.getElementById('pickingStage').style.display = "block";
+        document.getElementById('pullingStage').style.display = "none";
+        document.getElementById('pipe').innerHTML = "";
+    }
+    }, 800);
 
     var resultBG = document.createElement('img');
     resultBG.id = "resultBG";
@@ -2630,4 +2809,22 @@ let xbtn = document.createElement('img');
 
 function changeToLoop(){
    document.getElementById('gotIt').className = "gotItLoop";
+}
+
+function loopAudience(){
+    if(document.getElementById('PipeAmbience').currentTime >= 9.0) {
+        document.getElementById('PipeAmbience').currentTime = 2.3;
+    } 
+}
+
+function loopHold(){
+    if(document.getElementById('HoldPipe').currentTime >= 3.5) {
+        document.getElementById('HoldPipe').currentTime = 2;
+    } 
+}
+
+function loopShop(){
+    if(document.getElementById('Shop').currentTime >= 14.6) {
+        document.getElementById('Shop').currentTime = 0;
+    } 
 }

@@ -1096,7 +1096,7 @@ h4 {
     margin-top: 13px;
     width: 445px;
     height: 28px;
-    background: rgba(0, 0, 0, 0.5);
+    background-image: url(../Images/Pipe/Banner/Header.png);
 }
 
 .sectionbartxt {
@@ -1132,9 +1132,9 @@ h4 {
     height: 62px;
     position: absolute;
     z-index: 15;
-    margin-left: 273px;
+    margin-left: 274px;
     filter: drop-shadow(0px 0px 4px #222);
-    bottom: 44px;
+    bottom: 48px;
 }
 
 .pipetxt {
@@ -1659,7 +1659,7 @@ width: 608px;z-index: 99;height: 1080px;margin:0 auto;position: relative;overflo
 }
 
 .pullypipeglow {
-    display: block;
+    display: none;
     position: absolute;
     bottom: 55px;
     /* margin-left: 180px; */
@@ -1668,6 +1668,32 @@ width: 608px;z-index: 99;height: 1080px;margin:0 auto;position: relative;overflo
     /* width: 250px; */
     height: 1090px;
     z-index: 4;
+}
+
+.pullypipeglowoverlay {
+    display: none;
+    position: absolute;
+    bottom: 55px;
+    /* margin-left: 180px; */
+    pointer-events: none;
+    object-fit: fill;
+    /* width: 250px; */
+    height: 1090px;
+    z-index: 4;
+    mix-blend-mode: overlay;
+}
+
+.pullypipeglowoverlayfinal {
+    display: none;
+    position: absolute;
+    bottom: 55px;
+    /* margin-left: 180px; */
+    pointer-events: none;
+    object-fit: fill;
+    /* width: 250px; */
+    height: 1090px;
+    z-index: 4;
+    mix-blend-mode: overlay;
 }
 
 /* The Close Button */
@@ -2620,7 +2646,7 @@ width: 608px;z-index: 99;height: 1080px;margin:0 auto;position: relative;overflo
     pointer-events: none;
     width: 608px;
     height: 1080px;
-    margin-top: -1335px;
+    /*margin-top: -1335px;*/
     user-select: none;
     animation: resultBG 0.2s;
     -webkit-animation: resultBG 0.2s;
@@ -2658,7 +2684,7 @@ width: 608px;z-index: 99;height: 1080px;margin:0 auto;position: relative;overflo
     pointer-events: none;
     width: 608px;
     height: 1080px;
-    margin-top: -1330px;
+    /*margin-top: -1330px;*/
     user-select: none;
     animation: itemList 1.5s;
     -webkit-animation: itemList 1.5s;
@@ -2683,7 +2709,7 @@ width: 608px;z-index: 99;height: 1080px;margin:0 auto;position: relative;overflo
     pointer-events: none;
     width: 608px;
     height: 608px;
-    margin-top: -1150px;
+    margin-top: 185px;
     margin-left: 80px;
     animation: itemList 1.5s;
     -webkit-animation: itemList 1.5s;
