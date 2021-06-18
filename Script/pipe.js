@@ -569,7 +569,13 @@ function generateDetails(pipeId){
     spotlightDriver.forEach((t, i) => {
         if(values[t].rarityId == 2){
         if(currentRowIndex == 0){
-            driverImageCell.rowSpan = (spotlightDriver.length + 1);
+            let spotlightCount = 0;
+            spotlightDriver.forEach((t, i) => {
+                if(values[t].rarityId == 2){
+                    spotlightCount++;
+                }
+            });
+            driverImageCell.rowSpan = (spotlightCount + 1);
             newestTableBody.appendChild(driverImageCell);
 
         }
@@ -591,7 +597,13 @@ function generateDetails(pipeId){
     spotlightKart.forEach((t, i) => {
         if(values[t].rarityId == 2){
         if(currentRowIndex == 0){
-            kartImageCell.rowSpan = (spotlightKart.length + 1);
+            let spotlightCount = 0;
+            spotlightKart.forEach((t, i) => {
+                if(values[t].rarityId == 2){
+                    spotlightCount++;
+                }
+            });
+            kartImageCell.rowSpan = (spotlightCount + 1);
             newestTableBody.appendChild(kartImageCell);
 
         }
@@ -613,7 +625,13 @@ function generateDetails(pipeId){
     spotlightGlider.forEach((t, i) => {
         if(values[t].rarityId == 2){
         if(currentRowIndex == 0){
-            gliderImageCell.rowSpan = (spotlightGlider.length + 1);
+            let spotlightCount = 0;
+            spotlightGlider.forEach((t, i) => {
+                if(values[t].rarityId == 2){
+                    spotlightCount++;
+                }
+            });
+            gliderImageCell.rowSpan = (spotlightCount + 1);
             newestTableBody.appendChild(gliderImageCell);
         }
         currentRowIndex++;
@@ -752,7 +770,13 @@ function generateDetails(pipeId){
     spotlightDriver.forEach((t, i) => {
         if(values[t].rarityId == 1){
         if(currentRowIndex == 0){
-            driverImageCell.rowSpan = (spotlightDriver.length + 1);
+            let spotlightCount = 0;
+            spotlightDriver.forEach((t, i) => {
+                if(values[t].rarityId == 1){
+                    spotlightCount++;
+                }
+            });
+            driverImageCell.rowSpan = (spotlightCount + 1);
             newestTableBody.appendChild(driverImageCell);
         }
         currentRowIndex++;
@@ -770,7 +794,13 @@ function generateDetails(pipeId){
     spotlightKart.forEach((t, i) => {
         if(values[t].rarityId == 1){
         if(i == 0){
-            kartImageCell.rowSpan = (spotlightKart.length + 1);
+            let spotlightCount = 0;
+            spotlightKart.forEach((t, i) => {
+                if(values[t].rarityId == 1){
+                    spotlightCount++;
+                }
+            });
+            kartImageCell.rowSpan = (spotlightCount + 1);
             newestTableBody.appendChild(kartImageCell);
 
         }
@@ -789,7 +819,13 @@ function generateDetails(pipeId){
     spotlightGlider.forEach((t, i) => {
         if(values[t].rarityId == 1){
         if(i == 0){
-            gliderImageCell.rowSpan = (spotlightGlider.length + 1);
+            let spotlightCount = 0;
+            spotlightGlider.forEach((t, i) => {
+                if(values[t].rarityId == 1){
+                    spotlightCount++;
+                }
+            });
+            gliderImageCell.rowSpan = (spotlightCount + 1);
             newestTableBody.appendChild(gliderImageCell);
         }
 
@@ -916,7 +952,13 @@ function generateDetails(pipeId){
     spotlightDriver.forEach((t, i) => {
         if(values[t].rarityId == 0){
         if(currentRowIndex == 0){
-            driverImageCell.rowSpan = (spotlightDriver.length + 1);
+            let spotlightCount = 0;
+            spotlightDriver.forEach((t, i) => {
+                if(values[t].rarityId == 0){
+                    spotlightCount++;
+                }
+            });
+            driverImageCell.rowSpan = (spotlightCount + 1);
             newestTableBody.appendChild(driverImageCell);
         }
         currentRowIndex++;
@@ -934,7 +976,13 @@ function generateDetails(pipeId){
     spotlightKart.forEach((t, i) => {
         if(values[t].rarityId == 0){
         if(i == 0){
-            kartImageCell.rowSpan = (spotlightKart.length + 1);
+            let spotlightCount = 0;
+            spotlightKart.forEach((t, i) => {
+                if(values[t].rarityId == 0){
+                    spotlightCount++;
+                }
+            });
+            kartImageCell.rowSpan = (spotlightCount + 1);
             newestTableBody.appendChild(kartImageCell);
 
         }
@@ -953,7 +1001,13 @@ function generateDetails(pipeId){
     spotlightGlider.forEach((t, i) => {
         if(values[t].rarityId == 0){
         if(i == 0){
-            gliderImageCell.rowSpan = (spotlightGlider.length + 1);
+            let spotlightCount = 0;
+            spotlightGlider.forEach((t, i) => {
+                if(values[t].rarityId == 0){
+                    spotlightCount++;
+                }
+            });
+            gliderImageCell.rowSpan = (spotlightCount + 1);
             newestTableBody.appendChild(gliderImageCell);
         }
 
@@ -2155,7 +2209,7 @@ function Result(){
     Skippable = true;
     Result();
     }
-  }, 6400);
+  }, 6300);
 
     }
     pullToggle = 1;
