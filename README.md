@@ -1,24 +1,20 @@
 # Pipe-Simulator
 An electron compiled pipe simulator for Mario Kart Tour! Updated simultaneously (and automatically) with my Mario Kart Tour Values tool. 
 
-Ironically, this has taken far too much time.
+Ironically, this has taken far too much time. Especially now.
 
-**Update 1.1**
-- 2 new Pipes included
-- Skip star animation in settings, which was previously unskippable in the middle of pulling
-- Skip results scene on singles in settings, it's more accurate to the game that way.
-- Some updates to the details section
-- ACP can never be a Green Fakeout
-- Instead of using APNG/GIF, all pulling now uses videos which are the source quality and are much better.
-- There is now shop music! This can be disabled in settings.
-- Show and hide official pipes, it's easier that way sometimes
-- Many sounds that did not loop now do
-- The pulling pipe glow is now more accurate, though it is still not perfect.
-- Settings now save and are loaded when opening the app
-- More sound effects within the app
+**Update 2.0**
+- Voice clips! Your favorite drivers now have their voice clips when pulling.
+- The News section! Now you can keep up with what is added to the simulator
+- The Tour Selector menu! You can navigate the pipes easier by selecting specific tours' pipes to display
+- The inventory section! The simulator now keeps track of all the items you pulled, and displays stats for them in the list view
+- Custom Gold Mario Pipe! A brand new custom pipe to celebrate the 2.0.0. Find Gold Mario and his set in the spotlight!
+- Bug fixes. Many, many bug fixes. Includes errors in details section when a pipe has multiple of the same spotlight.
+
 
 **Future changes:**
--Rework spotlight odds. That new system with 2 of the same spotlight messed it up.
--Adjust settings and rubies count to be fixed to the top of the screen
--Remove unused assets
--Custom pipes creation?????
+- Remove unused assets
+- Today's Challenge Pipe (difficult)
+- More sound effects
+- Possible item information screen
+- Custom pipes creation?????
