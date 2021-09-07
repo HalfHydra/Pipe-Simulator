@@ -33,6 +33,10 @@ var removefrom2ndshelf = [];
 
 let savedata = {
     rubiesSpent: 0,
+    seenNews: [],
+    firstLaunch: true,
+    selectToggleOption: 0,
+    selectedGroups: [],
     Pipes: {
     }
 }
@@ -43,9 +47,16 @@ let settingsavedata = {
         showPreviousPipes: false,
         showCustomPipes: false,
         disableSingleResults: false,
-        skipStarAnimation: false
+        skipStarAnimation: true,
+        skipStarAnimationPersist: false
     }
 }
+
+let seenNews = [];
+let firstLaunch = true;
+let selectToggleOption = 0;
+let selectedGroups = [];
+
 var characterid = [];
 var charrarity = [];
 var charitem = [];
@@ -65,6 +76,9 @@ let wingTable = [];
 let disableShopBGM = false;
 let disableSingleResults = false;
 let skipStarAnimation = false;
+let skipStarAnimationPersist = false;
+
+let newItems = [];
 
 function generateArrays(){
 
@@ -151,6 +165,7 @@ function changedebugsave() {
 }
 
 function updateLocalSaveData(){
+    fixOldSave();
     localStorage.setItem("MKTPSaveData",JSON.stringify(savedata, null, 2));
 }
 
@@ -178,13 +193,38 @@ function applyLocalSettings(){
         document.getElementById('changeSkipStar').checked = true;
         skipStarAnimation = true;
     }
+    if(settingsavedata.Settings.skipStarAnimationPersist){
+        document.getElementById('changeSkipStarPersist').checked = true;
+        skipStarAnimationPersist = true;
+    }
     if(!settingsavedata.Settings.showOfficialPipes){
         document.getElementById('changeOfficialPipes').checked = true;
     }
-    if(settingsavedata.Settings.showPreviousPipes){
+    /*if(settingsavedata.Settings.showPreviousPipes){
         document.getElementById('changePreviousPipes').checked = true;
-    }
+    }*/
     if(settingsavedata.Settings.showCustomPipes){
         document.getElementById('changeCustomPipes').checked = true;
+    }
+}
+
+function fixOldSave(){
+    if(savedata.seenNews == null){
+        savedata.seenNews = [];
+    }
+    if(savedata.firstLaunch == null){
+        savedata.firstLaunch = true;
+    }
+    if(savedata.selectToggleOption == null){
+        savedata.firstselectToggleOptionLaunch = 0;
+    }
+    if(savedata.selectedGroups == null){
+        savedata.selectedGroups = [];
+    }
+    if(savedata.Items == null){
+        savedata.Items = {};
+        savedata.Items.Drivers = {};
+        savedata.Items.Karts = {};
+        savedata.Items.Gliders = {};
     }
 }

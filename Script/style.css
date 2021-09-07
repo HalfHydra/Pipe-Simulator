@@ -1011,11 +1011,12 @@ h4 {
   margin: auto;
   padding: 0px;
   border: 5px solid #fff;
+  border-radius: 10px;
   width: 328px;
   height: 330px;
   z-index: 99;
   overflow: hidden;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.6);
   display: inline-block;
   position: relative;
 }
@@ -1044,12 +1045,13 @@ h4 {
 
 .bannerpipe {
     border: 3px solid #ffffff;
+    border-radius: 5px;
     /* margin-top: -42px; */
     z-index: 1;
     position: relative;
     text-align: center;
     color: #005096;
-    width: 322px;
+    width: 318px;
 }
 
 .fire1pipe {
@@ -1195,7 +1197,7 @@ h4 {
 .titleText {
     color: white;
     font-family: tour;
-    /*font-size: 28px;*/
+    font-size: 24px;
     text-align: center;
     margin-left: 10px;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
@@ -1569,8 +1571,8 @@ h4 {
 
 .settingBtnPipe {
     color:black;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     position: absolute;
     top: 5px;
     right: 3px;
@@ -1667,7 +1669,8 @@ width: 608px;z-index: 99;height: 1080px;margin:0 auto;position: relative;overflo
     object-fit: fill;
     /* width: 250px; */
     height: 1090px;
-    z-index: 4;
+    z-index: 5;
+    /*mix-blend-mode: hard-light;*/
 }
 
 .pullypipeglowoverlay {
@@ -1681,6 +1684,7 @@ width: 608px;z-index: 99;height: 1080px;margin:0 auto;position: relative;overflo
     height: 1090px;
     z-index: 4;
     mix-blend-mode: overlay;
+    opacity: 0.5;
 }
 
 .pullypipeglowoverlayfinal {
@@ -1693,7 +1697,7 @@ width: 608px;z-index: 99;height: 1080px;margin:0 auto;position: relative;overflo
     /* width: 250px; */
     height: 1090px;
     z-index: 4;
-    mix-blend-mode: overlay;
+    /*mix-blend-mode: overlay;*/
 }
 
 /* The Close Button */
@@ -2705,16 +2709,16 @@ width: 608px;z-index: 99;height: 1080px;margin:0 auto;position: relative;overflo
 
 .itemListPanel {
     display: inline-block;
-    position: absolute;
-    pointer-events: none;
-    width: 608px;
-    height: 608px;
-    margin-top: 185px;
-    margin-left: 80px;
+    width: 668px;
+    height: 833px;
+    margin-top: 87px;
     animation: itemList 1.5s;
     -webkit-animation: itemList 1.5s;
-    animation-fill-mode: forwards; 
+    animation-fill-mode: forwards;
     opacity: 1;
+    padding-left: 80px;
+    overflow-y: scroll;
+    padding-top: 18px;
 }
 
 .panelNewIcon {
@@ -2728,8 +2732,8 @@ width: 608px;z-index: 99;height: 1080px;margin:0 auto;position: relative;overflo
 
 .ckgpanelpipe {
     width: 135px;
-    height: 175px;
     margin-left: 6px;
+    margin-bottom: 172px;
     display: inline-block;
     transform: scale(1.85);
 }
@@ -2780,6 +2784,7 @@ width: 608px;z-index: 99;height: 1080px;margin:0 auto;position: relative;overflo
     text-align: center;
     font-family: 'tour';
     color: white;
+    user-select: text;
 }
 
 .panelAmount {
@@ -2810,4 +2815,467 @@ width: 608px;z-index: 99;height: 1080px;margin:0 auto;position: relative;overflo
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(154, 145, 138, 0.9);
+}
+
+.menudiv {
+    width: 100%;
+    position: sticky;
+    background-image: url(../Images/UI/Background/BlackPattern.png);
+    background-size: 25vh;
+    height: 82px;
+    top: 0;
+    z-index: 100;
+}
+
+.menubuttondiv {
+    width: 315px;
+    height: 62px;
+    position: relative;
+    top: 5px;
+    vertical-align: center;
+    /*background-color: red;*/
+    vertical-align: center;
+    margin: 0 auto;
+    border: 4px solid #FFFFFF;
+}
+
+.menubuttonpipe {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    /*margin: 5px;*/
+    /* margin-top: 12px; */
+    /*border: 4px solid #FFFFFF;*/
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li img {
+  display: block;
+  color: white;
+  width: 45px;
+    height: 45px;
+  text-align: center;
+      padding: 10px 9px;
+  text-decoration: none;
+}
+
+li img:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #04AA6D;
+}
+
+.newsdiv {
+
+}
+
+.newsheader {
+    pointer-events: none;
+}
+
+.newsdate {
+    font-family: 'headername2';
+    color: gray;
+    text-align: right;
+    margin-top: -15px;
+    margin-bottom: 5px;
+    padding-right: 10px;
+}
+
+.newsbanner {
+    width: 435px;
+    border-radius: 10px;
+    border: 2px solid #FFF;
+    cursor:pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.newsname {
+    color: white;
+    font-family: 'headername2';
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.bannerimg {
+    margin: 0 auto;
+    width: 422px;
+    border: 2px solid #FFF;
+}
+
+.termtoptxt {
+    width: 417px;
+    margin-left: 18px;
+    text-align: center;
+    font-family: 'tour';
+    color: white;
+    font-size: 14px;
+}
+
+.selectdiv {
+    width: 430px;
+    top: 5px;
+    position: relative;
+    background-image: url(../Images/Pipe/Select/BGColor.png);
+    border-radius: 20px;
+    margin: 0 auto;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.selecticon {
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
+    position: relative;
+    display: inline-block;
+    margin-right: 16px;
+}
+
+/*.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}*/
+
+.selecticon .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.selecticon:hover .tooltiptext {
+  visibility: visible;
+}
+
+.selecticondiv:hover {
+  background-color: green;
+}
+
+.selectname {
+    display: inline-block;
+    font-family: 'tour';
+    color: white;
+    height:80px;
+    vertical-align: middle;
+}
+
+.selecticondiv {
+    height: 80px;
+    text-align: left;
+    padding-left: 14px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.selectoptiondiv {
+    width: 430px;
+    top: 5px;
+    position: relative;
+    background-image: url(../Images/Pipe/Select/BGColor.png);
+    border-radius: 20px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.selecticonoption {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    position: relative;
+    display: inline-block;
+    margin-right: 16px;
+    pointer-events: none;
+}
+
+.selectnameoption {
+    display: inline-block;
+    font-family: 'tour';
+    color: white;
+    height:66px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+
+.selecticondivoption {
+    height: 58px;
+    text-align: left;
+    padding-left: 19px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.subTitleText {
+    color: white;
+    font-family: tour;
+    font-size: 18px;
+    text-align: center;
+    margin-left: 10px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.inventorychar {
+    width: 456px;
+    margin-top: 40px;
+    margin-left: 96px;
+    position: relative;
+    text-align: left;
+}
+
+.inventorykart {
+    width: 456px;
+    margin-top: 40px;
+    margin-left: 96px;
+    position: relative;
+    text-align: left;
+}
+
+.inventoryglider {
+    width: 456px;
+    margin-top: 40px;
+    margin-left: 96px;
+    position: relative;
+    text-align: left;
+}
+
+.ckgpanelinventory {
+    width: 99.5px;
+    height: 124.5px;
+    display: inline-block;
+    cursor: pointer;
+    transform: scale(1.4);
+    position:relative;
+    right: 45px;
+}
+
+.ckgpanelinventorygray {
+    width: 99.5px;
+    height: 124.5px;
+    display: inline-block;
+    cursor: pointer;
+    transform: scale(1.4);
+    position:relative;
+    right: 45px;
+    filter: brightness(36%);
+}
+
+.inventorybuttons {
+    width: 400px;
+    height: 62px;
+    position: sticky;
+    margin: 0 auto;
+    top: 5px;
+    vertical-align: center;
+    border: 4px solid #FFFFFF;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-image: url(../Images/UI/Background/NewsBG.png);
+    top: 82px;
+    z-index: 10;
+}
+
+.menubuttoninventory {
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    object-fit: contain;
+    float:left;
+}
+
+.menubuttoninventory:hover {
+    background-color:#04AA6D;
+}
+
+.menubuttoninventoryright {
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    object-fit: contain;
+    float:right;
+}
+
+.menubuttoninventoryright:hover {
+    background-color:#04AA6D;
+}
+
+.ckgpanelinventorylist {
+    width: 99.5px;
+    height: 124.5px;
+    display: inline-block;
+    cursor: pointer;
+    transform: scale(1.4);
+    position:relative;
+    right: 45px;
+    text-align: left;
+    padding-top: 24px;
+    padding-left: 52px;
+}
+
+.ckgpanelinventorylistgray {
+    width: 99.5px;
+    height: 124.5px;
+    display: inline-block;
+    cursor: pointer;
+    transform: scale(1.4);
+    position:relative;
+    right: 45px;
+    filter: brightness(36%);
+    text-align: left;
+    padding-top: 24px; 
+    padding-left: 52px;
+}
+
+
+.newIcon {
+    display: block;
+    position: absolute;
+    top: -165px;
+    left: 6px;
+    width: 80px;
+    pointer-events: none;
+    z-index: 41;
+}
+
+.inventorylistchar {
+    margin-top: 8px;
+}
+
+.listpanel {
+    height: 136px;
+    width: 416px;
+    margin: 0 auto;
+    background-image: url(../Images/Pipe/Select/BGColor.png);
+    border-radius: 20px;
+    margin-bottom: 3px;
+    padding: 10px;
+}
+
+.listlevelpanel {
+    display: inline-block;
+    height: 130px;
+    vertical-align: top;
+    margin-left: -40px;
+    position: relative;
+}
+.listlevelbgimg {
+    height: 100px;
+}
+
+.listtotalpanel {
+    width: 170px;
+    vertical-align: top;
+}
+
+.listtotalicon {
+    width: 38px;
+}
+
+.listtotaltext {
+    font-family: 'tour';
+    color: white;
+    display: inline-block;
+    position: relative;
+    top: -11px;
+    left: 6px;
+
+}
+
+.listcoinicon {
+    display: inline-block;
+    width: 90px;
+    vertical-align: top;
+    margin-top: 7px;
+    margin-left: 15px;
+}
+
+.leveliconlist {
+    position: absolute;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin-top: -131px;
+    margin-left: 4px;
+}
+
+.listlevelprogress {
+    position: absolute;
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -88px;
+    margin-left: -52px;
+    width: 103px;
+}
+
+.listlevelprogress::-webkit-progress-bar {
+    background-color: #000;
+}
+
+.listlevelprogress::-webkit-progress-value {
+    background-image: url('../Images/Pipe/Select/progressGradient.png');
+}
+
+.listlevelprogresstext {
+    position: absolute;
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -91px;
+    margin-left: 38px;
+    width: 100px;
+    font-family: tour;
+    font-size: 13px;
+    color: white;
+    letter-spacing: -1px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.listcointext {
+    position: absolute;
+    color: white;
+    border-top-left-radius: 10px;
+    background-color: rgba(0,0,0, 0.65);
+    font-family: 'headername';
+    right: 32px;
+    margin-top: -58px;
+    text-align: right;
+    padding-right: 4px;
+    padding-left: 5px;
+}
+
+.newswhiteborder {
+    border: 2px solid white;
+    margin-top: 5px;
+}
+
+.tourBadgeImg {
+    color: black;
+    width: 64px;
+    height: 84px;
+    object-fit: contain;
+    position: absolute;
+    top: 0px;
+    right: 1px;
 }
